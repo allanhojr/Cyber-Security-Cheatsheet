@@ -2,9 +2,15 @@
    script.js — Ethical Hacking Cheat Sheet
    Features:
      1. Copy buttons on every command
-     2. Real-time search (filters cards + highlights matches)
-     3. Scroll-spy active nav link
-     4. Mobile drawer open/close
+     2. Real-time search (all text OR commands only)
+     3. Match count badge per card
+     4. Search highlight
+     5. Collapsible cards (click title to toggle)
+     6. Difficulty badges (beginner / intermediate / advanced)
+     7. Scroll-spy active nav link
+     8. Dark / Light mode toggle (persisted in localStorage)
+     9. Back to top button
+    10. Mobile drawer open / close
 ══════════════════════════════════════════ */
 
 // ── SVG icons ────────────────────────────
@@ -38,7 +44,6 @@ function initCopyButtons() {
     wrap.appendChild(btn);
 
     btn.addEventListener('click', () => {
-      // Strip the CSS-injected "$ " prompt prefix if present
       const text = cmd.innerText.replace(/^\$ /, '');
       navigator.clipboard.writeText(text).then(() => {
         btn.innerHTML = ICON_COPIED;
@@ -53,8 +58,77 @@ function initCopyButtons() {
 }
 
 // ════════════════════════════════════════
-// 2. SEARCH
+// 2. DIFFICULTY BADGES
 // ════════════════════════════════════════
+function initDifficultyBadges() {
+  document.querySelectorAll('.entry[data-level]').forEach(entry => {
+    const level = entry.getAttribute('data-level');
+    if (!level) return;
+    const label = entry.querySelector('.entry-label');
+    if (!label) return;
+
+    const badge = document.createElement('span');
+    badge.className = `level-badge ${level}`;
+    badge.textContent = level === 'intermediate' ? 'MED' : level.toUpperCase().slice(0, 3);
+    badge.title = level.charAt(0).toUpperCase() + level.slice(1);
+    label.appendChild(badge);
+  });
+}
+
+// ════════════════════════════════════════
+// 3. COLLAPSIBLE CARDS
+// ════════════════════════════════════════
+function initCollapsibleCards() {
+  document.querySelectorAll('.card').forEach(card => {
+    const title = card.querySelector('.card-title');
+    if (!title) return;
+
+    // Wrap all sibling elements after the title into .card-body
+    const body = document.createElement('div');
+    body.className = 'card-body';
+
+    // Move everything after the title into body
+    let next = title.nextElementSibling;
+    while (next) {
+      const after = next.nextElementSibling;
+      body.appendChild(next);
+      next = after;
+    }
+    card.appendChild(body);
+
+    // Add chevron to title
+    const chevron = document.createElement('span');
+    chevron.className = 'collapse-chevron';
+    chevron.textContent = '▼';
+    title.appendChild(chevron);
+
+    // Toggle on title click
+    title.addEventListener('click', () => {
+      card.classList.toggle('collapsed');
+
+      // Persist state per card id
+      const id = card.id;
+      if (id) {
+        const collapsed = JSON.parse(sessionStorage.getItem('collapsed') || '{}');
+        collapsed[id] = card.classList.contains('collapsed');
+        sessionStorage.setItem('collapsed', JSON.stringify(collapsed));
+      }
+    });
+
+    // Restore collapsed state
+    const id = card.id;
+    if (id) {
+      const collapsed = JSON.parse(sessionStorage.getItem('collapsed') || '{}');
+      if (collapsed[id]) card.classList.add('collapsed');
+    }
+  });
+}
+
+// ════════════════════════════════════════
+// 4. SEARCH
+// ════════════════════════════════════════
+let searchMode = 'all'; // 'all' | 'cmd'
+
 function initSearch() {
   const desktopInput = document.getElementById('searchInputDesktop');
   const mobileInput  = document.getElementById('searchInputMobile');
@@ -63,13 +137,31 @@ function initSearch() {
   const resultsCount = document.getElementById('resultsCount');
   const noResults    = document.getElementById('noResults');
   const noResultsQ   = document.getElementById('noResultsQuery');
+  const modeAll      = document.getElementById('modeAll');
+  const modeCmds     = document.getElementById('modeCmds');
 
-  // Sync both inputs so they always show the same query
+  // Mode toggle buttons
+  if (modeAll && modeCmds) {
+    modeAll.addEventListener('click', () => {
+      searchMode = 'all';
+      modeAll.classList.add('active');
+      modeCmds.classList.remove('active');
+      runSearch(desktopInput.value || mobileInput.value);
+    });
+
+    modeCmds.addEventListener('click', () => {
+      searchMode = 'cmd';
+      modeCmds.classList.add('active');
+      modeAll.classList.remove('active');
+      runSearch(desktopInput.value || mobileInput.value);
+    });
+  }
+
   function syncInputs(value) {
-    desktopInput.value = value;
-    mobileInput.value  = value;
-    clearDesktop.classList.toggle('visible', value.length > 0);
-    clearMobile.classList.toggle('visible',  value.length > 0);
+    if (desktopInput) desktopInput.value = value;
+    if (mobileInput)  mobileInput.value  = value;
+    if (clearDesktop) clearDesktop.classList.toggle('visible', value.length > 0);
+    if (clearMobile)  clearMobile.classList.toggle('visible',  value.length > 0);
   }
 
   function runSearch(raw) {
@@ -79,36 +171,64 @@ function initSearch() {
     const cards   = document.querySelectorAll('.card');
     const banners = document.querySelectorAll('.phase-banner');
 
-    // Remove previous highlights
+    // Remove previous highlights and match badges
     document.querySelectorAll('.search-highlight').forEach(el => {
       el.outerHTML = el.textContent;
     });
+    document.querySelectorAll('.match-badge').forEach(el => el.remove());
 
     if (!query) {
-      // Show everything
       cards.forEach(c   => c.classList.remove('search-hidden'));
       banners.forEach(b => b.classList.remove('search-hidden'));
-      resultsCount.textContent = '';
-      noResults.classList.remove('visible');
+      if (resultsCount) resultsCount.textContent = '';
+      if (noResults)    noResults.classList.remove('visible');
       return;
     }
 
     let visibleCards = 0;
 
     cards.forEach(card => {
-      const text = card.textContent.toLowerCase();
-      if (text.includes(query)) {
+      // Determine what text to search based on mode
+      let searchText;
+      if (searchMode === 'cmd') {
+        searchText = Array.from(card.querySelectorAll('code.cmd'))
+          .map(c => c.textContent).join(' ').toLowerCase();
+      } else {
+        searchText = card.textContent.toLowerCase();
+      }
+
+      if (searchText.includes(query)) {
         card.classList.remove('search-hidden');
         visibleCards++;
+
+        // Count matches and add badge
+        const matchCount = countMatches(card, query);
+        if (matchCount > 0) {
+          const cardTitle = card.querySelector('.card-title');
+          if (cardTitle) {
+            const badge = document.createElement('span');
+            badge.className = 'match-badge';
+            badge.textContent = `${matchCount} match${matchCount !== 1 ? 'es' : ''}`;
+            // Insert before the chevron if it exists
+            const chevron = cardTitle.querySelector('.collapse-chevron');
+            if (chevron) cardTitle.insertBefore(badge, chevron);
+            else cardTitle.appendChild(badge);
+          }
+        }
+
+        // Expand collapsed card so results are visible
+        if (card.classList.contains('collapsed')) {
+          card.classList.remove('collapsed');
+        }
+
         highlightInCard(card, query);
       } else {
         card.classList.add('search-hidden');
       }
     });
 
-    // Hide banners with no visible cards after them
+    // Hide banners with no visible cards
     banners.forEach(banner => {
-      // Look for next sibling cards until the next banner
       let next = banner.nextElementSibling;
       let hasVisible = false;
       while (next && !next.classList.contains('phase-banner')) {
@@ -121,24 +241,34 @@ function initSearch() {
       banner.classList.toggle('search-hidden', !hasVisible);
     });
 
-    // Results count
     if (visibleCards > 0) {
-      resultsCount.textContent = `${visibleCards} section${visibleCards !== 1 ? 's' : ''} found`;
-      noResults.classList.remove('visible');
+      if (resultsCount) resultsCount.textContent = `${visibleCards} card${visibleCards !== 1 ? 's' : ''} found`;
+      if (noResults)    noResults.classList.remove('visible');
     } else {
-      resultsCount.textContent = '';
-      noResultsQ.textContent = raw;
-      noResults.classList.add('visible');
+      if (resultsCount) resultsCount.textContent = '';
+      if (noResultsQ)   noResultsQ.textContent = raw;
+      if (noResults)    noResults.classList.add('visible');
     }
   }
 
-  // Highlight matched text inside a card
-  function highlightInCard(card, query) {
-    // Only highlight in text nodes inside .entry-label and .cmd elements
-    const targets = card.querySelectorAll('.entry-label, code.cmd, .tip');
+  function countMatches(card, query) {
+    const targets = searchMode === 'cmd'
+      ? card.querySelectorAll('code.cmd')
+      : card.querySelectorAll('.entry-label, code.cmd, .tip');
+    let count = 0;
     targets.forEach(el => {
-      highlightTextNodes(el, query);
+      const text = el.textContent.toLowerCase();
+      let pos = 0;
+      while ((pos = text.indexOf(query, pos)) !== -1) { count++; pos += query.length; }
     });
+    return count;
+  }
+
+  function highlightInCard(card, query) {
+    const targets = searchMode === 'cmd'
+      ? card.querySelectorAll('code.cmd')
+      : card.querySelectorAll('.entry-label, code.cmd, .tip');
+    targets.forEach(el => highlightTextNodes(el, query));
   }
 
   function highlightTextNodes(el, query) {
@@ -148,9 +278,7 @@ function initSearch() {
     while ((node = walker.nextNode())) nodes.push(node);
 
     nodes.forEach(textNode => {
-      const lower = textNode.textContent.toLowerCase();
-      if (!lower.includes(query)) return;
-
+      if (!textNode.textContent.toLowerCase().includes(query)) return;
       const regex = new RegExp(`(${escapeRegex(query)})`, 'gi');
       const html = textNode.textContent.replace(regex, '<mark class="search-highlight">$1</mark>');
       const span = document.createElement('span');
@@ -163,30 +291,30 @@ function initSearch() {
     return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   }
 
-  // Wire up both inputs
-  desktopInput.addEventListener('input', e => runSearch(e.target.value));
-  mobileInput.addEventListener('input',  e => runSearch(e.target.value));
+  if (desktopInput) desktopInput.addEventListener('input', e => runSearch(e.target.value));
+  if (mobileInput)  mobileInput.addEventListener('input',  e => runSearch(e.target.value));
+  if (clearDesktop) clearDesktop.addEventListener('click', () => runSearch(''));
+  if (clearMobile)  clearMobile.addEventListener('click',  () => runSearch(''));
 
-  clearDesktop.addEventListener('click', () => runSearch(''));
-  clearMobile.addEventListener('click',  () => runSearch(''));
-
-  // Keyboard shortcut: / to focus search
   document.addEventListener('keydown', e => {
-    if (e.key === '/' && document.activeElement !== desktopInput && document.activeElement !== mobileInput) {
+    const active = document.activeElement;
+    const inInput = active === desktopInput || active === mobileInput;
+
+    if (e.key === '/' && !inInput) {
       e.preventDefault();
       const isMobile = window.innerWidth <= 860;
-      (isMobile ? mobileInput : desktopInput).focus();
+      (isMobile ? mobileInput : desktopInput)?.focus();
     }
     if (e.key === 'Escape') {
       runSearch('');
-      desktopInput.blur();
-      mobileInput.blur();
+      desktopInput?.blur();
+      mobileInput?.blur();
     }
   });
 }
 
 // ════════════════════════════════════════
-// 3. SCROLL-SPY (active nav link)
+// 5. SCROLL-SPY
 // ════════════════════════════════════════
 function initScrollSpy() {
   const navLinks = document.querySelectorAll('.nav-link');
@@ -201,7 +329,6 @@ function initScrollSpy() {
         const active = document.querySelector(`.nav-link[href="#${entry.target.id}"]`);
         if (active) {
           active.classList.add('active');
-          // Scroll nav to keep active item visible
           active.scrollIntoView({ block: 'nearest' });
         }
       }
@@ -213,7 +340,6 @@ function initScrollSpy() {
     if (el) observer.observe(el);
   });
 
-  // Smooth scroll + close drawer on nav link click
   navLinks.forEach(link => {
     link.addEventListener('click', e => {
       e.preventDefault();
@@ -230,22 +356,67 @@ function initScrollSpy() {
 }
 
 // ════════════════════════════════════════
-// 4. MOBILE DRAWER
+// 6. DARK / LIGHT MODE TOGGLE
+// ════════════════════════════════════════
+function initTheme() {
+  const saved = localStorage.getItem('theme') || 'dark';
+  applyTheme(saved);
+
+  document.getElementById('themeToggleDesktop')?.addEventListener('click', toggleTheme);
+  document.getElementById('themeToggleMobile')?.addEventListener('click',  toggleTheme);
+}
+
+function applyTheme(theme) {
+  const isLight = theme === 'light';
+  document.body.classList.toggle('light', isLight);
+
+  const icon = isLight ? '🌙' : '☀';
+  const tip  = isLight ? 'Switch to dark mode' : 'Switch to light mode';
+  document.querySelectorAll('.theme-toggle').forEach(btn => {
+    btn.textContent = icon;
+    btn.title = tip;
+  });
+}
+
+function toggleTheme() {
+  const isLight = document.body.classList.contains('light');
+  const next = isLight ? 'dark' : 'light';
+  localStorage.setItem('theme', next);
+  applyTheme(next);
+}
+
+// ════════════════════════════════════════
+// 7. BACK TO TOP
+// ════════════════════════════════════════
+function initBackToTop() {
+  const btn = document.getElementById('backToTop');
+  if (!btn) return;
+
+  window.addEventListener('scroll', () => {
+    btn.classList.toggle('visible', window.scrollY > 300);
+  }, { passive: true });
+
+  btn.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+}
+
+// ════════════════════════════════════════
+// 8. MOBILE DRAWER
 // ════════════════════════════════════════
 function initDrawer() {
-  const sidebar       = document.getElementById('sidebar');
-  const hamburgerBtn  = document.getElementById('hamburgerBtn');
-  const sidebarClose  = document.getElementById('sidebarClose');
-  const overlay       = document.getElementById('drawerOverlay');
+  const hamburgerBtn = document.getElementById('hamburgerBtn');
+  const sidebarClose = document.getElementById('sidebarClose');
+  const overlay      = document.getElementById('drawerOverlay');
 
-  hamburgerBtn.addEventListener('click', () => {
+  hamburgerBtn?.addEventListener('click', () => {
     const isOpen = document.getElementById('sidebar').classList.contains('open');
     isOpen ? closeDrawer() : openDrawer();
   });
-  sidebarClose.addEventListener('click', closeDrawer);
-  overlay.addEventListener('click',      closeDrawer);
 
-  // Close on Escape
+  sidebarClose?.addEventListener('click', closeDrawer);
+  overlay?.addEventListener('click',      closeDrawer);
+
   document.addEventListener('keydown', e => {
     if (e.key === 'Escape') closeDrawer();
   });
@@ -258,17 +429,21 @@ function openDrawer() {
 }
 
 function closeDrawer() {
-  document.getElementById('sidebar').classList.remove('open');
-  document.getElementById('drawerOverlay').classList.remove('visible');
+  document.getElementById('sidebar')?.classList.remove('open');
+  document.getElementById('drawerOverlay')?.classList.remove('visible');
   document.body.style.overflow = '';
 }
 
 // ════════════════════════════════════════
-// INIT
+// INIT — order matters
 // ════════════════════════════════════════
 document.addEventListener('DOMContentLoaded', () => {
+  initTheme();           // theme first so no flash
   initCopyButtons();
+  initDifficultyBadges();
+  initCollapsibleCards();
   initSearch();
   initScrollSpy();
+  initBackToTop();
   initDrawer();
 });
